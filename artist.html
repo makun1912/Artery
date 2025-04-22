@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery Artists</title>
+  <style>
+    body {
+      background-color: #5C0E14;
+      font-family: 'Arial', sans-serif;
+      color: #f0e6d6;
+      margin: 0;
+      padding: 20px;
+    }
+    
+    h1 {
+      text-align: center;
+      color: #c1946a;
+      font-size: 3rem;
+      margin-bottom: 40px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    
+    .artists-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .artist-card {
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .artist-card:hover {
+      transform: translateY(-10px);
+    }
+    
+    .artist-image {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-bottom: 2px solid #c1946a;
+    }
+    
+    .artist-info {
+      padding: 20px;
+    }
+    
+    .artist-name {
+      color: #c1946a;
+      margin: 0 0 10px;
+      font-size: 1.5rem;
+    }
+    
+    .artist-period {
+      color: #b8b8b8;
+      font-style: italic;
+      margin-bottom: 15px;
+    }
+    
+    .artist-bio {
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+    
+    .artist-link {
+      color: #c1946a;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+      border: 1px solid #c1946a;
+      padding: 5px 15px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+    
+    .artist-link:hover {
+      background-color: #c1946a;
+      color: #5C0E14;
+    }
+    
+    @media (max-width: 768px) {
+      .artists-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1><b>Featured Artists</b></h1>
+  
+  <div class="artists-container">
+    <!-- Vincent van Gogh -->
+    <div class="artist-card">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Vincent_van_Gogh_-_Self-Portrait_-_Google_Art_Project_%28454045%29.jpg" alt="Vincent van Gogh" class="artist-image">
+      <div class="artist-info">
+        <h2 class="artist-name">Vincent van Gogh</h2>
+        <p class="artist-period">1853-1890 • Post-Impressionism</p>
+        <p class="artist-bio">Dutch post-impressionist painter whose work had a far-reaching influence on 20th-century art. Known for bold colors and emotional honesty in works like "Starry Night" and "Sunflowers."</p>
+        <a href="https://www.britannica.com/biography/Vincent-van-Gogh" class="artist-link">View Works</a>
+      </div>
+    </div>
+    
+    <!-- Frida Kahlo -->
+    <div class="artist-card">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Frida_Kahlo%2C_by_Guillermo_Kahlo.jpg" alt="Frida Kahlo" class="artist-image">
+      <div class="artist-info">
+        <h2 class="artist-name">Frida Kahlo</h2>
+        <p class="artist-period">1907-1954 • Surrealism/Mexican Folk Art</p>
+        <p class="artist-bio">Mexican artist known for her many portraits, self-portraits, and works inspired by nature and artifacts of Mexico, often exploring questions of identity and postcolonialism.</p>
+        <a href="https://www.theartist.me/art-inspiration/20-famous-paintings-frida-kahlo/" class="artist-link">View Works</a>
+      </div>
+    </div>
+    
+    <!-- Pablo Picasso -->
+    <div class="artist-card">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Pablo_picasso_1.jpg" alt="Pablo Picasso" class="artist-image">
+      <div class="artist-info">
+        <h2 class="artist-name">Pablo Picasso</h2>
+        <p class="artist-period">1881-1973 • Cubism</p>
+        <p class="artist-bio">Spanish painter, sculptor, and co-founder of the Cubist movement. One of the most influential artists of the 20th century, known for works like "Guernica" and "Les Demoiselles d'Avignon."</p>
+        <a href="https://www.metmuseum.org/essays/pablo-picasso-1881-1973" class="artist-link">View Works</a>
+      </div>
+    </div>
+    
+    <!-- Claude Monet -->
+    <div class="artist-card">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Claude_Monet_1899_Nadar_crop.jpg" alt="Claude Monet" class="artist-image">
+      <div class="artist-info">
+        <h2 class="artist-name">Claude Monet</h2>
+        <p class="artist-period">1840-1926 • Impressionism</p>
+        <p class="artist-bio">Founder of French Impressionist painting. Obsessed with light and nature, his series of water lilies and haystacks revolutionized modern art.</p>
+        <a href="https://www.bing.com/images/search?q=claude+monet&qpvt=Claude+Monet&FORM=IGRE" class="artist-link">View Works</a>
+      </div>
+    </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Art Gallery</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-image: url('bg01.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: white;
+      font-family: 'Roboto', sans-serif;
+      padding-top: 80px; 
+    }
+
+    h1, h2 {
+      font-family: 'Copperplate Gothic Light', serif;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    p {
+      font-family: 'Copperplate Gothic Light', sans-serif;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    
+    header {
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #a58431;
+      padding: 15px 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease-in-out;
+    }
+
+    header.scrolled {
+      background-color: rgba(0, 0, 0, 0.95);
+      padding: 10px 0;
+      box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      text-align: center;
+      margin: 0;
+      padding: 0 10px;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    nav ul li {
+      margin: 5px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 8px 15px;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      color: #1a1a1a;
+      background-color: #F3E5C3;
+      border-radius: 25px;
+    }
+
+  .popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .popup-content {
+    background: rgb(17, 11, 11);
+    padding: 30px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    position: relative;
+    animation: fadeIn 0.3s;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .close-btn:hover {
+    color: #ff0000;
+  }
+  
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(-20px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+
+
+    .hero {
+      position: relative;
+      background-image: url('https://www.bing.com/images/search?view=detailV2&ccid=WrdkXZu%2b&id=0C23478DEC561876AA2E7490320CA85BD4FA1ECB&thid=OIP.WrdkXZu-WPitBnG8A7iC5QHaEo&mediaurl=https%3a%2f%2fwww.pixelstalk.net%2fwp-content%2fuploads%2f2016%2f07%2fArt-paint-widescreen-wallpaper.jpg&exph=1800&expw=2880&q=background+art&simid=607995644493856500&FORM=IRPRST&ck=1D8D244D46A595763F102177B75A8F85&selectedIndex=16&itb=0');
+      background-size: cover;
+      background-position: center;
+      min-height: 300px;
+      text-align: center;
+      color: #CCDDEA;
+      padding: 50px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-content {
+      width: 100%;
+      padding: 20px;
+      color: rgb(248, 248, 248);
+      text-align: center;
+      z-index: 1;
+    }
+
+    .hero-content h1 {
+      font-size: 2rem;
+      margin-bottom: 15px;
+      color: #fffeff;
+    }
+
+    .hero-content p {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+
+    .hero-images {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+      z-index: 1;
+    }
+
+    .hero-images img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .hero-images img:hover {
+      transform: scale(1.1) rotateY(10deg);
+      filter: brightness(1.2);
+      box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .featured-works {
+      padding: 50px 10%;
+      background-color:#5C0E14; 
+      transpirancy: 1;
+    }
+    
+    .featured-works h2 {
+      text-align: center;
+      font-size: 36px;
+    }
+    
+    .featured-works .grid {
+      display:flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    
+    .featured-works .artwork {
+      width: 30%;
+    }
+    .featured-works .artwork {
+  transition: transform 0.3s ease-in-out;
+}
+.artwork h3 {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.artwork:hover h3 {
+  transform: translateY(-5px);
+  color: #F3E5C3;
+}
+
+.featured-works .artwork:hover {
+  transform: translateY(-10px); 
+}
+
+    .featured-works .artwork img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+    
+    .featured-works .artwork img {
+  transition: transform 0.3s ease-in-out;
+}
+
+.featured-works .artwork img:hover {
+  transform: scale(1.05); 
+}
+
+
+    .featured-works .artwork h3 {
+      font-size: 24px;
+      margin: 10px 0;
+    }
+    
+    .featured-works .artwork p {
+      font-size: 16px;
+    }
+    
+    .artwork img {
+  transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+}
+
+.artwork img:hover {
+  transform: scale(1.1) rotateY(10deg);
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
+}
+    
+    .featured-works .artwork2 {
+      width: 30%;
+    }
+    .featured-works .artwork2 {
+  transition: transform 0.3s ease-in-out;
+}
+.artwork2 h3 {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.artwork:hover2 h3 {
+  transform: translateY(-5px);
+  color: #F3E5C3;
+}
+
+.featured-works .artwork2:hover {
+  transform: translateY(-10px); 
+}
+
+    .featured-works .artwork2 img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+    
+    .featured-works .artwork2 img {
+  transition: transform 0.3s ease-in-out;
+}
+
+.featured-works .artwork2 img:hover {
+  transform: scale(1.05); 
+}
+
+
+    .featured-works .artwork2 h3 {
+      font-size: 24px;
+      margin: 10px 0;
+    }
+    
+    .featured-works .artwork2 p {
+      font-size: 16px;
+    }
+    
+    .artwork2 img {
+  transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+}
+
+.artwork2 img:hover {
+  transform: scale(1.1) rotateY(10deg);
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
+}
+.featured-works {
+      padding: 50px 10%;
+      background-color:#5C0E14; 
+      transpirancy: 1;
+    }
+    
+    .featured-works h2 {
+      text-align: center;
+      font-size: 36px;
+    }
+    .featured-works .artwork3 {
+      width: 30%;
+    }
+    .featured-works .artwork3 {
+  transition: transform 0.3s ease-in-out;
+}
+.artwork3 h3 {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.artwork:hover h3 {
+  transform: translateY(-5px);
+  color: #F3E5C3;
+}
+
+.featured-works .artwork3:hover {
+  transform: translateY(-10px); 
+}
+
+    .featured-works .artwork3 img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+    
+    .featured-works .artwork3 img {
+  transition: transform 0.3s ease-in-out;
+}
+
+.featured-works .artwork3 img:hover {
+  transform: scale(1.05); 
+}
+
+
+    .featured-works .artwork3 h3 {
+      font-size: 24px;
+      margin: 10px 0;
+    }
+    
+    .featured-works .artwork3 p {
+      font-size: 16px;
+    }
+    
+    .artwork3 img {
+  transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+}
+
+.artwork3 img:hover {
+  transform: scale(1.1) rotateY(10deg);
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+    .upcoming-exhibitions {
+      padding: 40px 5%;
+      background-color: #c1946a;
+    }
+
+    .upcoming-exhibitions h2 {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+    }
+
+    .upcoming-exhibitions .exhibition {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 40px;
+      transition: transform 0.3s ease;
+    }
+
+    .upcoming-exhibitions .exhibition:hover {
+      transform: scale(1.02);
+    }
+
+    .upcoming-exhibitions .exhibition img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .upcoming-exhibitions .exhibition img:hover {
+      transform: scale(1.05) rotateY(10deg);
+      box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .upcoming-exhibitions .exhibition-details {
+      width: 100%;
+      font-size: 1rem;
+    }
+
+    .upcoming-exhibitions .exhibition-details h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    .button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 0;
+      background-color: #c1946a;
+    }
+
+    .byt {
+  background-color:  #C1946A, #5C0E14; 
+  border: none;
+  font-size: 1rem;
+  border-radius: 50px;
+  padding: 12px 25px;
+  cursor: pointer;
+  display: block; 
+  margin: 0 auto; 
+  transition: all 0.3s ease;
+  width: fit-content;
+  text-align: center;
+}
+
+.byt:hover {
+  background: linear-gradient(90deg, #5C0E14, #C1946A); 
+  transform: translateY(-2px); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+    .cta-button {
+      background-color: #F3E5C3;
+      color: #1a1a1a;
+      font-size: 1rem;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      animation: pulse 2s infinite;
+    }
+
+    .cta-button:hover {
+      transform: scale(1.05);
+      background-color: #1a1a1a;
+      color: #c9c7c2;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+@keyframes highlight {
+  0% { background-color: #5C0E14; }
+  50% { background-color: rgba(92, 14, 20, 0.7); }
+  100% { background-color: #5C0E14; }
+}
+    footer {
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      padding: 30px 0;
+      text-align: center;
+    }
+
+    footer .social-icons {
+      margin-bottom: 20px;
+    }
+
+    footer .social-icons a {
+      color: #fff;
+      margin: 0 10px;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    footer .social-icons a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 0;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: #fff;
+      margin: 0 10px;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+    .gallery-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.gallery-popup .popup-content {
+  background: #5C0E14;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 800px;
+  width: 90%;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.gallery-grid img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.gallery-grid img:hover {
+  transform: scale(1.05);
+}
+    @media (min-width: 768px) {
+      header h1 {
+        font-size: 2.2rem;
+      }
+
+      nav ul li a {
+        font-size: 1rem;
+        padding: 10px 20px;
+      }
+
+      .hero {
+        min-height: 400px;
+      }
+
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero-images img {
+        width: 100px;
+        height: 100px;
+      }
+
+      .featured-works .grid {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      .featured-works .artwork {
+        width: 48%;
+      }
+
+      .upcoming-exhibitions .exhibition {
+        flex-direction: row;
+        align-items: center;
+      }
+
+      .upcoming-exhibitions .exhibition img {
+        width: 48%;
+        margin-bottom: 0;
+      }
+
+      .upcoming-exhibitions .exhibition-details {
+        width: 48%;
+        padding-left: 20px;
+      }
+
+    }
+
+    @media (min-width: 1024px) {
+      header h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero-content h1 {
+        font-size: 3rem;
+      }
+
+      .hero-images {
+        flex-wrap: nowrap;
+      }
+
+      .featured-works .artwork {
+        width: 31%;
+      }
+
+      .featured-works .artwork h3 {
+        font-size: 1.6rem;
+      }
+
+      .upcoming-exhibitions .exhibition-details h3 {
+        font-size: 1.8rem;
+      }
+
+      footer .social-icons a, 
+      .footer-links a {
+        font-size: 1rem;
+        margin: 0 15px;
+      }
+    }
+  </style>
+</head>
+<body class="background-image" data-aos-easing="ease" data-aos-duration="1000" data-aos-delay="0" id="top">
+  <header>
+    <h1 class="log"><b>Artery</b></h1>
+    <nav>
+      <ul>
+        <li><a href="#top">Home</a></li>
+        <li><a href="#Exhibitions">Exhibitions</a></li>
+        <li><a href="artist.html"target="_blank">Artists</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#" id="contactBtn">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <section class="hero">
+    <div class="hero-content">
+      <h1 data-aos="fade-down">Explore the World of Art</h1>
+      <p data-aos="fade-up" data-aos-delay="200">Discover timeless beauty, creativity, and thought-provoking expressions at our gallery.</p>
+      <button class="cta-button" data-aos="fade-up" data-aos-delay="400" id="viewGalleryBtn">View Gallery</button>
+    </div>
+    <div class="hero-images">
+      <img src="hero01.webp" alt="Artwork 1" data-aos="zoom-in" data-aos-delay="100">
+      <img src="hero02.jpg" alt="Artwork 2" data-aos="zoom-in" data-aos-delay="200">
+      <img src="hero3.webp" alt="Artwork 3" data-aos="zoom-in" data-aos-delay="300">
+      <img src="R.jpeg" alt="Artwork 4" data-aos="zoom-in" data-aos-delay="400">
+      <img src="r02.jpg" alt="Artwork 5" data-aos="zoom-in" data-aos-delay="500">
+    </div>
+  </section>
+<section class="featured-works">
+  <h2>Featured Artworks</h2>
+  <p>Experience a curated selection of artworks that embody the spirit of our gallery.</p>
+  
+  <div class="grid">
+    <div class="artwork">
+      <img src="mod.jpeg" alt="Artwork 1">
+      <h3>Modern Landscape</h3>
+      <p>By John Doe | A stunning interpretation of the contemporary world through vibrant landscapes.</p>
+    </div>
+    
+    <div class="artwork2">
+      <img src="ab.webp" alt="Artwork 2">
+      <h3>Abstract Energy</h3>
+      <p>By Jane Smith | A dynamic and colorful abstract representation of human emotions and energy.</p>
+    </div>
+    
+    <div class="artwork3">
+      <img src="dos.jpg" alt="Artwork 3">
+      <h3>The Depth of the Sea</h3>
+      <p>By Sarah Lee | A mesmerizing underwater scene that captures the beauty of oceanic life.</p>
+    </div>
+  </div>
+</section>
+  </section>
+
+  <section class="upcoming-exhibitions"id="Exhibitions">
+    <h2 data-aos="fade-up">Upcoming Exhibitions</h2>
+    <div class="exhibition" data-aos="fade-up">
+      <img src="ef.jpg" alt="Exhibition 1">
+      <div class="exhibition-details">
+        <h3>Exploration of Form</h3>
+        <p>Opening: March 1, 2025 - Join us for the debut of a collection of works exploring organic and geometric forms. Featuring new artists from the city.</p>
+      </div>
+    </div>
+    <div class="exhibition" data-aos="fade-up" data-aos-delay="200">
+      <img src="cs.jpeg" alt="Exhibition 2">
+      <div class="exhibition-details">
+        <h3>The Color Spectrum</h3>
+        <p>Opening: April 10, 2025 - A celebration of color through art, exploring how different shades evoke emotion.</p>
+      </div>
+    </div>
+  </section>
+
+  <div id="contactPopup" class="popup-overlay">
+    <div class="popup-content">
+      <span class="close-btn">&times;</span>
+      <h3>Contact Us</h3>
+      <p>Email: Artery@786.com</p>
+      <p>Phone: +123 456 7890</p>
+      <p>Address: 123 Art Street, Gallery City</p>
+    </div>
+  </div>
+  
+  <script>
+    document.getElementById('contactLink').addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('contactDialog').showModal();
+    });
+  </script>
+  <footer>
+    <p id="about">© 2025 Artery | All Rights Reserved </p>
+    <div class="social-icons">
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+      <a href="#">Twitter</a>
+    </div>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms & Conditions</a>
+      <a href="#">Cancellation</a>
+      <a href="#">FAQ</a>
+      <a href="#">Contact</a>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+  
+    AOS.init({
+      duration: 1000,
+      once: true
+    });
+
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+    document.getElementById('viewGalleryBtn').addEventListener('click', function() {
+  // Create gallery popup
+  const galleryPopup = document.createElement('div');
+  galleryPopup.className = 'gallery-popup';
+  galleryPopup.innerHTML = `
+    <div class="popup-content">
+      <span class="close-btn">&times;</span>
+      <h3>Gallery Preview</h3>
+      <div class="gallery-grid">
+        <img src="hero01.webp" alt="Gallery Image 1">
+        <img src="hero02.jpg" alt="Gallery Image 2">
+        <img src="hero3.webp" alt="Gallery Image 3">
+      </div>
+    </div>
+  `;
+  document.body.appendChild(galleryPopup);
+  
+  // Close functionality
+  galleryPopup.querySelector('.close-btn').addEventListener('click', () => {
+    document.body.removeChild(galleryPopup);
+  });
+});
+    window.addEventListener('scroll', function() {
+      const header = document.querySelector('header');
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    const galleryImages = document.querySelectorAll('.hero-images img');
+    galleryImages.forEach(image => {
+      image.addEventListener('click', () => {
+        const lightbox = document.createElement('div');
+        lightbox.classList.add('lightbox');
+        const img = document.createElement('img');
+        img.src = image.src;
+        img.alt = image.alt;
+        lightbox.appendChild(img);
+        document.body.appendChild(lightbox);
+        
+        lightbox.addEventListener('click', () => {
+          document.body.removeChild(lightbox);
+        });
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+  const contactLink = document.getElementById('contactLink');
+  const popup = document.getElementById('contactPopup');
+  const closeBtn = document.querySelector('.close-btn');
+
+  
+  contactLink.addEventListener('click', function(e) {
+    e.preventDefault();
+    popup.style.display = 'flex';
+  });
+
+  closeBtn.addEventListener('click', function() {
+    popup.style.display = 'none';
+  });
+  popup.addEventListener('click', function(e) {
+    if (e.target === popup) {
+      popup.style.display = 'none';
+    }
+  });
+});
+    let currentIndex = 0;
+    const artworks = document.querySelectorAll('.artwork');
+    const totalArtworks = artworks.length;
+
+    function showArtwork(index) {
+      artworks.forEach(artwork => artwork.style.display = 'none');
+      artworks[index].style.display = 'block';
+    }
+
+    function nextArtwork() {
+      currentIndex = (currentIndex + 1) % totalArtworks;
+      showArtwork(currentIndex);
+    }
+
+    function previousArtwork() {
+      currentIndex = (currentIndex - 1 + totalArtworks) % totalArtworks;
+      showArtwork(currentIndex);
+    }
+
+    if (artworks.length > 0) {
+      showArtwork(currentIndex);
+    }
+  
+  document.getElementById('contactBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('contactPopup').style.display = 'flex';
+  });
+  
+  document.querySelector('.close-btn').addEventListener('click', function() {
+    document.getElementById('contactPopup').style.display = 'none';
+  });
+  
+  document.getElementById('contactPopup').addEventListener('click', function(e) {
+    if (e.target === this) {
+      this.style.display = 'none';
+    }
+  });
+
+  </script>
+</body>
+</html>
